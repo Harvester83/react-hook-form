@@ -1,26 +1,24 @@
-import { useForm } from 'react-hook-form'
-
+import { useForm } from "react-hook-form";
 
 const MyForm = () => {
-
-  
-const { register } = useForm();
-// const { name, ref, onChange, onBlur } = register("username");
+  const { register } = useForm();
+  // const { name, ref, onChange, onBlur } = register("username");
 
   return (
     <>
-      <form action="">
+      <form>
         <div>
-          <input name="username" type="text" {...register("username")}/>
+          <input id="username" type="text" {...register("username")} />
         </div>
 
         <div>
-          <input type="text" />
+          <input id="email" type="email" {...register("email")} />
         </div>
 
         <div>
-          <input type="text" />
+          <input id="chanel" type="text" {...register("chanel")} />
         </div>
+        <button type="submit">SUBMIT</button>
       </form>
     </>
   );
