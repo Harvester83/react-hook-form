@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 
 const MyForm = () => {
-  const { register } = useForm();
+  const { register, control } = useForm();
   // const { name, ref, onChange, onBlur } = register("username");
 
   return (
@@ -20,6 +21,7 @@ const MyForm = () => {
         </div>
         <button type="submit">SUBMIT</button>
       </form>
+      <DevTool control={control}/>
     </>
   );
 };
