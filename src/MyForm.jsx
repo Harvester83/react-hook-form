@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
 let renderCount = 0;
@@ -11,8 +11,14 @@ const MyForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      phoneNumbers: [{ number: "" }],
+    },
+  });
   // const { name, ref, onChange, onBlur } = register("username");
+
+  const { fields } = useFieldArray({ name: "phoneNumbers", control });
 
   const onSubmit = (data) => {
     console.log(data);
@@ -62,6 +68,20 @@ const MyForm = () => {
           <span style={{ color: "#f00", fontWeight: "bold" }}>
             {errors.chanel?.message}
           </span>
+
+          <div>
+            <h6>List of Numbers</h6>
+            {fields.map((field, index) => {
+              return (
+                <div key={field.id}>
+                  <input
+                    type="text"
+                    {...register(`phoneNumbers.${index}.number`)}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
         <button type="submit">SUBMIT</button>
       </form>
