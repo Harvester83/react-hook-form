@@ -18,7 +18,7 @@ const MyForm = () => {
   });
   // const { name, ref, onChange, onBlur } = register("username");
 
-  const { fields } = useFieldArray({ name: "phoneNumbers", control });
+  const { fields, remove, append } = useFieldArray({ name: "phoneNumbers", control });
 
   const onSubmit = (data) => {
     console.log(data);
@@ -65,6 +65,7 @@ const MyForm = () => {
               required: { value: true, message: "Chanel field is required" },
             })}
           />
+          
           <span style={{ color: "#f00", fontWeight: "bold" }}>
             {errors.chanel?.message}
           </span>
@@ -78,11 +79,13 @@ const MyForm = () => {
                     type="text"
                     {...register(`phoneNumbers.${index}.number`)}
                   />
+                  {index > 0 && (<button onClick={() => remove(index)}>REMOVE</button>)}
                 </div>
               );
             })}
           </div>
         </div>
+        <button onClick={() => append()}>ADD INPUT</button>
         <button type="submit">SUBMIT</button>
       </form>
       <DevTool control={control} />
