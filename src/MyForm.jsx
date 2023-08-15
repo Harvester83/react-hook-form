@@ -14,14 +14,18 @@ const MyForm = () => {
   } = useForm({
     defaultValues: {
       phoneNumbers: [{ number: "" }],
+      age: 0,
     },
   });
   // const { name, ref, onChange, onBlur } = register("username");
 
-  const { fields, remove, append } = useFieldArray({ name: "phoneNumbers", control });
+  const { fields, remove, append } = useFieldArray({
+    name: "phoneNumbers",
+    control,
+  });
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log('data :', data);
   };
 
   return (
@@ -65,28 +69,67 @@ const MyForm = () => {
               required: { value: true, message: "Chanel field is required" },
             })}
           />
-          
+
           <span style={{ color: "#f00", fontWeight: "bold" }}>
             {errors.chanel?.message}
           </span>
-
-          <div>
-            <h6>List of Numbers</h6>
-            {fields.map((field, index) => {
-              return (
-                <div key={field.id}>
-                  <input
-                    type="text"
-                    {...register(`phoneNumbers.${index}.number`)}
-                  />
-                  {index > 0 && (<button onClick={() => remove(index)}>REMOVE</button>)}
-                </div>
-              );
-            })}
-          </div>
         </div>
-        <button onClick={() => append()}>ADD INPUT</button>
-        <button type="submit">SUBMIT</button>
+
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="age">Age</label>
+          <input
+            id="age"
+            type="text"
+            {...register("age", {
+              //valueAsNumber: true,
+              required: { value: true, message: "Age field is required" },
+            })}
+          />
+
+          <span style={{ color: "#f00", fontWeight: "bold" }}>
+            {errors.age?.message}
+          </span>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="dateBirthday">Date To Birthday</label>
+          <input
+            id="dateBirthday"
+            type="date"
+            {...register("dateBirthday", {
+              valueAsDate: true,
+              required: { value: true, message: "dateBirthday field is required" },
+            })}
+          />
+
+          <span style={{ color: "#f00", fontWeight: "bold" }}>
+            {errors.dateBirthday?.message}
+          </span>
+        </div>
+
+        <div>
+          <h6>List of Numbers</h6>
+          {fields.map((field, index) => {
+            return (
+              <div key={field.id}>
+                <input
+                  type="text"
+                  {...register(`phoneNumbers.${index}.number`)}
+                />
+                {index > 0 && (
+                  <button onClick={() => remove(index)}>REMOVE</button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <button style={{ display: "flex" }} onClick={() => append()}>
+          ADD INPUT
+        </button>
+        <button style={{ display: "flex" }} type="submit">
+          SUBMIT
+        </button>
       </form>
       <DevTool control={control} />
     </>
